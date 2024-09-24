@@ -224,6 +224,20 @@ public class BinaryTree {
 
         // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
         // BINARY TREE (WHICH IS BASED ON RECURSION)
+         if (node == null) {
+        return;
+    }
+
+    // If the node's value matches oldVal, replace it with newVal
+    if (node.value == oldVal) {
+        node.value = newVal;
+    }
+
+    // Recur on the left child
+    replaceValueHelper(node.left, oldVal, newVal);
+
+    // Recur on the right child
+    replaceValueHelper(node.right, oldVal, newVal);
 
     }
 
