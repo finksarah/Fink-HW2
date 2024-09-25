@@ -1,4 +1,3 @@
-
 /*
  * *** PLACE YOUR NAME / SECTION HERE ***
  *
@@ -58,7 +57,7 @@ public class BinaryTree {
         root = node;
     }
 
-    /* 
+    /*
      * Class Node
      *
      * The node object definition for each node of the bin ary tree.
@@ -178,7 +177,7 @@ public class BinaryTree {
      * which does the actual work. The public wrapper method simply passes the root
      * of the tree to helper method.
      */
-    
+
     public String preOrder() {
         return preOrderHelper(root);
     }
@@ -224,20 +223,21 @@ public class BinaryTree {
 
         // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
         // BINARY TREE (WHICH IS BASED ON RECURSION)
-         if (node == null) {
-        return;
-    }
 
-    // If the node's value matches oldVal, replace it with newVal
-    if (node.value == oldVal) {
-        node.value = newVal;
-    }
+        if (node == null) {
+            return;
+        }
 
-    // Recur on the left child
-    replaceValueHelper(node.left, oldVal, newVal);
+        // If the node's value is the same as oldVal, replace it with newVal
+        if (node.data == oldVal) {
+            node.data = newVal;
+        }
 
-    // Recur on the right child
-    replaceValueHelper(node.right, oldVal, newVal);
+        // Recur on the left
+        replaceValueHelper(node.left, oldVal, newVal);
+
+        // Recur on the right
+        replaceValueHelper(node.right, oldVal, newVal);
 
     }
 
@@ -260,8 +260,15 @@ public class BinaryTree {
 
         // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
         // BINARY TREE (WHICH IS BASED ON RECURSION)
+        if (node == null) {
+            return Integer.MAX_VALUE;
+        }
 
-        return Integer.MAX_VALUE;
+        // If the node's value matches oldVal, replace it with newVal
+        int leftMinVal = findMinHelper(node.left);
+        int rightMinVal = findMinHelper(node.right);
+
+        return Math.min(node.data, Math.min(leftMinVal, rightMinVal)); //return the smallest node value found
     }
 
 
@@ -282,11 +289,19 @@ public class BinaryTree {
 
         // ADD YOUR CODE HERE -- USE DEPTH FIRST SEARCH OF
         // BINARY TREE (WHICH IS BASED ON RECURSION)
-
+        int count = 0;
         // return -1; // RECALL, IF TREE IS EMPTY, RETURN -1
+        if (node == null){
+            return 0;
+        }
+        if (node.data > val){ //if the current node's value is greater than the value add a count
+            count = 1;
+        }
 
+        int leftCounter = nodesGTHelper(node.left, val); //count left
+        int rightCounter = nodesGTHelper(node.right, val); //count right
 
-        return -1;
+        return count + leftCounter + rightCounter; //add them all up and return
     }
 
 
@@ -324,7 +339,18 @@ public class BinaryTree {
         // RECALL, IF THE TREE IS EMPTY, RETURN 0 FOR BOTH THE SUM AND
         // COUNT LOCATIONS IN THE RETURNED ARRAY AS SHOWN BELOW, ELSE
         // THE 'SUM' IS RETURNED IN INDEX LOCATION 0, AND COUNT IS LOCATION 1
+        int count = 0;
+        // return -1; // RECALL, IF TREE IS EMPTY, RETURN -1
+        if (n == null){
+            return new int[]{0, 0};
+        }
 
-        return new int[]{0, 0};
+        int[] left = averageHelper(n.left);
+        int[] right = averageHelper(n.right);
+
+        int sum = n.data + left[0] + right[0]; //add up data on the left and right
+        int counter = 1 + left[1] + right[1];  // counter for each node found
+
+        return new int[]{sum, counter};
     }
 }
